@@ -36,7 +36,7 @@ MAX_CHARS = 280
 OUTPUT_FILENAME = "entry.txt"
 
 
-def validate_joke(text):
+def validate_entry(text):
     """Check the line against the competition gate; raise ValueError if bad."""
     if not text or not text.strip():
         raise ValueError("joke must not be empty or only whitespace")
@@ -50,15 +50,15 @@ def validate_joke(text):
     return text
 
 
-def output_path():
+def resolve_output_dir():
     """Resolve where entry.txt goes: the harness dir, else /output."""
     base = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     return os.path.join(base, OUTPUT_FILENAME)
 
 
 def main():
-    line = validate_joke(JOKE)
-    path = output_path()
+    line = validate_entry(JOKE)
+    path = resolve_output_dir()
     parent = os.path.dirname(path)
     if parent:
         os.makedirs(parent, exist_ok=True)
